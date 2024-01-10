@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <input type="number" id="ano" placeholder="INTRODUZIR ANO:">
+    <button type="button" id="resultado" onclick="verif()">VERIFICAR</button>
+    <input type="text" id="resposta">
+    
+
+    <script>
+        var ano = document.getElementById('ano').value;
+        var resposta = document.getElementById('resposta').value;
+
+        function verif() {
+            if ((ano%400 == 0) || (ano%4==0 && ano%100!=0)){
+                document.getElementById('resposta').innerHTML="É bissexto";
+                console.log(ano.value);
+            } else {
+            document.getElementById('resposta').innerHTML="não é bissexto";
+                console.log(ano.value);
+            }
+            
+        }
+
+
+    </script>
+
+    
+    
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+      #div1{
+        position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+      }
+
+      button{
+        width: 150px;
+        height: 35px;
+      }
+
+      input{
+        width: 200px;
+        height: 30px;
+        border: .5px dotted black;
+			text-align: center;
+			font-size: 15px;
+      }
+
+      input:hover {
+			border: 1px solid black;
+		}
+
+    #home {
+			font-size: 15px;
+			background: none;
+			border: .001px solid black;
+			height: 35px;
+			width: 70px;
+			border-radius: 10px;
+		}
+
+		#home:hover {
+			color: rgb(255, 0, 0);
+			background-color: rgba(154, 154, 154, 0.324);
+		}
+
+    </style>
+
+</head>
+<body>
+  <a href="initial.html"><button id="home">HOME</button></a>
+
+
+  
+
+  <div id="div1">
+    <input type="number" id="input_value" placeholder="INTRODUZIR ANOS:">
+    <button type="button" onclick="funct()" id="resultado">RESULTADO</button>
+    <input type="text" id="output1" placeholder="RESPOSTAS" readonly>
+  </div>
+
+    <script>
+      var input_value = document.getElementById("input_value").value;
+      var output1 = document.getElementById("output1").value;
+      var resultado = document.getElementById("resultado").value;
+      
+
+    function funct() {
+
+        if (input_value % 4 == 0 && input_value % 100 !== 0) {
+        document.getElementById('output1').value = "Ano Bissexto";
+      }
+
+      else if(input_value % 4 !== 0 && input_value % 400 == 0){
+        document.getElementById('output1').value = "Ano Bissexto";
+
+      }
+      
+      else if(input_value % 100 == 0) {
+        document.getElementById('output1').value = "Este é um ano comum";
+      }
+
+    };
+      
+    </script>
+
+</body>
+</html>

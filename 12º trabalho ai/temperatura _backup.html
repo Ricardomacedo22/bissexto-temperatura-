@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperatura</title>
+</head>
+<body>
+
+    <style>
+        input{
+            margin: 15px;
+            border: 1px dotted black;
+            border-radius: 10px;
+            width: 200px;
+            height: 25px;
+            text-align: center;
+
+        }
+        .inputs{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+           
+        }
+         #cels_fah, #cels_kelv, #kelv_fah{
+            justify-self: center;
+            text-align: center;
+            width: 80px ;
+            height:40px ;
+            border-radius: 10px;
+        }
+        #reset{
+            border-radius: 100%;
+            width: 40px;
+            height: 40px;
+        }
+
+
+        #home{
+            height: 35px;
+            width: 70px;
+            border-radius: 10px;
+            background: none;
+        }
+
+
+        #home:hover{
+            color: rgb(255, 0, 0);
+            background-color: rgba(154, 154, 154, 0.324);
+        }
+
+
+     
+    </style>
+
+   <a href="initial.html"><button id="home">HOME</button></a>
+
+<div class="inputs">
+    <label for="celsius_fah">Celsius</label>
+    <input type="number" id="celsius_fah" placeholder="Celsius &#8451">
+    <button type="button" id="cels_fah">Conversão</button>
+    <button type="button" id="reset" onclick="location.reload()">C</button>
+    <input type="number" id="fahrenheit_cels" placeholder="Fahrenheit &#8457";>
+    <label for="fahrenheit_cels">Fahrenheit</label> <br>
+
+    <label for="celsius_kelv">Celsius</label>
+    <input type="number" id="celsius_kelv"  placeholder="Celsius &#8451">
+    <button type="button" id="cels_kelv">conversão</button>
+    <button type="button" id="reset" onclick="location.reload()">C</button>
+    <input type="number" id ="kelvin_cels" placeholder="Kelvin &#8490;">
+    <label for="kelvin_cels">Kelvin</label><br>
+
+    <label for="kelvin_fahr">Kelvin</label>
+    <input type="number" id="kelvin_fahr" placeholder="Kelvin &#8490;">
+    <button type="button" id="kelv_fah">Conversão</button>
+    <button type="button" id="reset" onclick="location.reload()">C</button>
+    <input type="number" id="fahrenheit_kelv" placeholder="Fahrenheit &#8457;">
+    <label for="fahrenheit_kelv">Fahrenheit</label>
+</div>
+
+
+    <script>
+        let cels_fah = document.getElementById("cels_fah");
+        let cels_kelv = document.getElementById("cels_kelv");
+        let kelv_fah = document.getElementById("kelv_fah");
+
+        cels_fah.addEventListener('click', function(){
+            var celsius_fah = document.getElementById("celsius_fah").value ;
+            var fahrenheit_cels = document.getElementById("fahrenheit_cels").value;
+
+            if (fahrenheit_cels === '' ) {
+                fahrenheit_cels = (celsius_fah * 1.8) + 32 ;
+                
+            } else if (celsius_fah === '' ) {
+                celsius_fah = (fahrenheit_cels - 32) / 1.8 ;
+            } 
+
+            document.getElementById("fahrenheit_cels").value = fahrenheit_cels;
+            document.getElementById("celsius_fah").value = celsius_fah;
+
+        })
+
+        /* celsius para kelvin*/
+
+        cels_kelv.addEventListener('click', function(){
+            var celsius_kelv = document.getElementById("celsius_kelv").value;
+            var kelvin_cels = document.getElementById("kelvin_cels").value;
+
+            if (celsius_kelv === '' ) {
+
+                celsius_kelv = parseFloat(kelvin_cels - 273.15);
+                
+            } else if (kelvin_cels === '' ) {
+
+                kelvin_cels = parseFloat((celsius_kelv * 273.15) / 273.15) + 273.15;
+            } 
+
+            (document.getElementById("celsius_kelv").value)= parseFloat(celsius_kelv).toFixed(1);
+            (document.getElementById("kelvin_cels").value) = parseFloat(kelvin_cels).toFixed(1) ;
+
+        })
+
+        /* kelvin para fahrenheit*/
+
+        kelv_fah.addEventListener('click', function(){
+            var kelvin_fahr = document.getElementById("kelvin_fahr").value ;
+            var fahrenheit_kelv = document.getElementById("fahrenheit_kelv").value;
+
+            if (kelvin_fahr === '' ) {
+                kelvin_fahr = parseFloat((fahrenheit_kelv - 32) / 1.8 )+ 273.15;
+
+            } else if (fahrenheit_kelv === '' ) {
+                fahrenheit_kelv = parseFloat((kelvin_fahr - 273.15) * 1.8) +32 ;
+            } 
+
+            document.getElementById("kelvin_fahr").value = parseFloat (kelvin_fahr).toFixed(1) ;
+            document.getElementById("fahrenheit_kelv").value = parseFloat(fahrenheit_kelv).toFixed(1);
+
+        })
+        
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+      #div1{
+        position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+      }
+
+      button{
+        width: 150px;
+        height: 35px;
+      }
+
+      input{
+        width: 200px;
+        height: 30px;
+        border: .5px dotted black;
+			text-align: center;
+			font-size: 15px;
+      }
+
+      input:hover {
+			border: 1px solid black;
+		}
+
+    #home {
+			font-size: 15px;
+			background: none;
+			border: .001px solid black;
+			height: 35px;
+			width: 70px;
+			border-radius: 10px;
+		}
+
+		#home:hover {
+			color: rgb(255, 0, 0);
+			background-color: rgba(154, 154, 154, 0.324);
+		}
+
+    </style>
+
+</head>
+<body>
+  <a href="initial.html"><button id="home">HOME</button></a>
+
+
+  <input placeholder="INTRODUZIR ANO:" id="ano"></input> 
+  <button onclick="validar()">Validar</button>
+  <input placeholder="RESPOSTAS" id='resposta' style='display:inline'></input>
+
+    <script type="text/javascript">
+     function validar(){
+       var ano = parseInt(document.getElementById("ano").value);
+       resposta = document.getElementById('resposta');
+
+       if (ano%400 == 0)
+        resposta.innerHTML="É bissexto";
+       else
+        if(ano%4==0 && ano%100!=0)
+         resposta.innerHTML="É bissexto";
+        else
+         if(ano%100 == 0)
+         resposta.innerHTML="Não é bissexto";
+     }
+    </script>
+
+</body>
+</html>

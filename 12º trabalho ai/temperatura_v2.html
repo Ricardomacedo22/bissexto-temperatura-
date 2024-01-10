@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Temperatura</title>
+
+	<style>
+		input {
+			margin: 15px;
+			border: 1px dotted black;
+			border-radius: 10px;
+			width: 250px;
+			height: 35px;
+			text-align: center;
+		}
+
+		.inputs {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			text-align: center;
+		}
+
+		button {
+			cursor: pointer;
+		}
+
+		#cels_fah,
+		#cels_kelv,
+		#kelv_fah {
+			justify-self: center;
+			text-align: center;
+			width: 80px;
+			height: 40px;
+			border-radius: 10px;
+		}
+
+		.reset {
+			border-radius: 100%;
+			width: 40px;
+			height: 40px;
+		}
+
+		#home {
+			height: 35px;
+			width: 70px;
+			border-radius: 10px;
+			background: none;
+		}
+
+		#home:hover {
+			color: rgb(255, 0, 0);
+			background-color: rgba(154, 154, 154, 0.324);
+		}
+	</style>
+</head>
+
+<body>
+	<a href="initial.html"><button id="home">HOME</button></a>
+
+	<div class="inputs">
+		<form id="cels_fah_form">
+			<input type="number" id="celsius_fah" placeholder="Celsius &#8451">
+			<button type="submit" id="cels_fah">Conversão</button>
+			<button type="reset" class="reset">C</button>
+			<input type="number" id="fahrenheit_cels" placeholder="Fahrenheit &#8457" ;>
+		</form>
+
+		<form id="cels_kelv_form">
+			<input type="number" id="celsius_kelv" placeholder="Celsius &#8451">
+			<button type="button" id="cels_kelv">conversão</button>
+			<button type="reset" class="reset">C</button>
+			<input type="number" id="kelvin_cels" placeholder="Kelvin &#8490;">
+		</form>
+
+		<form id="kelv_fah_form">
+			<input type="number" id="kelvin_fahr" placeholder="Kelvin &#8490;">
+			<button type="button" id="kelv_fah">Conversão</button>
+			<button type="reset" class="reset">C</button>
+			<input type="number" id="fahrenheit_kelv" placeholder="Fahrenheit &#8457;">
+		</form>
+	</div>
+
+
+	<script>
+		/* celsius para fahrenheit */
+
+		var cels_fah_form = document.getElementById("cels_fah_form");
+		cels_fah_form.addEventListener('submit', function (event) {
+			event.preventDefault();
+
+			var celsius_fah = document.getElementById("celsius_fah").value;
+			var fahrenheit_cels = document.getElementById("fahrenheit_cels").value;
+
+			if (fahrenheit_cels < - 459.7) {
+				alert('Esse valor de temperatura é fisicamente impossível!');
+			} else if (celsius_fah < - 273.15) {
+				alert('Esse valor de temperatura é fisicamente impossível!');
+			}
+
+			if (fahrenheit_cels >= 77) {
+				document.getElementById('fahrenheit_cels').style.color = 'red'
+				document.getElementById('celsius_fah').style.color = 'red'
+			} else if (fahrenheit_cels < 77) {
+				document.getElementById('fahrenheit_cels').style.color = 'blue'
+				document.getElementById('celsius_fah').style.color = 'blue'
+			}
+
+			if (celsius_fah >= 25) {
+				document.getElementById('celsius_fah').style.color = 'red'
+				document.getElementById('fahrenheit_cels').style.color = 'red'
+			} else if (celsius_fah < 25) {
+				document.getElementById('celsius_fah').style.color = 'blue'
+				document.getElementById('fahrenheit_cels').style.color = 'blue'
+			}
+
+			if (fahrenheit_cels === '') {
+				fahrenheit_cels = parseFloat(celsius_fah * 1.8) + 32;
+			} else if (celsius_fah === '') {
+				celsius_fah = parseFloat(fahrenheit_cels - 32) / 1.8;
+			}
+
+			document.getElementById("celsius_fah").value = parseFloat(celsius_fah).toFixed(1);
+			document.getElementById("fahrenheit_cels").value = parseFloat(fahrenheit_cels).toFixed(1);
+		});
+
+		/* celsius para kelvin */
+
+		var cels_kelv_form = document.getElementById("cels_kelv_form");
+		cels_kelv_form.addEventListener('submit', function (event) {
+			event.preventDefault();
+
+			var celsius_kelv = document.getElementById("celsius_kelv").value;
+			var kelvin_cels = document.getElementById("kelvin_cels").value;
+
+			if (kelvin_cels < 0) {
+				alert('Esse valor de temperatura é fisicamente impossível!');
+			} else if (celsius_kelv < -273.15) {
+				alert('Esse valor de temperatura é fisicamente impossível!');
+			}
+
+			if (celsius_kelv >= 25) {
+				document.getElementById('celsius_kelv').style.color = 'red'
+				document.getElementById('kelvin_cels').style.color = 'red'
+			
+			}else if (kelvin_cels >= 298.1) {
+				document.getElementById('kelvin_cels').style.color = 'red'
+				document.getElementById('celsius_kelv').style.color = 'red'
+
+			} else if (celsius_kelv < 25) {
+				document.getElementById('celsius_kelv').style.color = 'blue'
+				document.getElementById('kelvin_cels').style.color = 'blue'
+
+			} else if (kelvin_cels < 298.1) {
+				document.getElementById('kelvin_cels').style.color = 'blue'
+				document.getElementById('celsius_kelv').style.color = 'blue'
+			}
+
+			if (celsius_kelv === '') {
+				celsius_kelv = parseFloat(kelvin_cels - 273.15);
+			} else if (kelvin_cels === '') {
+				kelvin_cels = parseFloat((celsius_kelv * 273.15) / 273.15) + 273.15;
+			}
+
+			document.getElementById("celsius_kelv").value = parseFloat(celsius_kelv).toFixed(1);
+			document.getElementById("kelvin_cels").value = parseFloat(kelvin_cels).toFixed(1);
+		});
+
+		/* kelvin para fahrenheit */
+
+		var kelv_fah_form = document.getElementById("kelv_fah_form");
+		kelv_fah_form.addEventListener('submit', function () {
+			event.preventDefault();
+
+			var kelvin_fahr = document.getElementById("kelvin_fahr").value;
+			var fahrenheit_kelv = document.getElementById("fahrenheit_kelv").value;
+
+			if (kelvin_fahr < 0) {
+				alert('Esse valor de temperatura é fisicamente impossível!')
+			} else if (fahrenheit_kelv < - 459.7) {
+				alert('Esse valor de temperatura é fisicamente impossível!')
+			}
+
+			if (kelvin_fahr >= 298.1) {
+				document.getElementById('kelvin_fahr').style.color = 'red'
+			} else if (kelvin_fahr < 298.1) {
+				document.getElementById('kelvin_fahr').style.color = 'blue'
+			}
+
+			if (fahrenheit_kelv >= 77) {
+				document.getElementById('fahrenheit_kelv').style.color = 'red'
+			} else if (fahrenheit_kelv < 77) {
+				document.getElementById('fahrenheit_kelv').style.color = 'blue'
+			}
+
+			if (kelvin_fahr === '') {
+				kelvin_fahr = parseFloat((fahrenheit_kelv - 32) / 1.8) + 273.15;
+			} if (fahrenheit_kelv === '') {
+				fahrenheit_kelv = parseFloat((kelvin_fahr - 273.15) * 1.8) + 32;
+			}
+
+			document.getElementById("kelvin_fahr").value = parseFloat(kelvin_fahr).toFixed(1);
+			document.getElementById("fahrenheit_kelv").value = parseFloat(fahrenheit_kelv).toFixed(1);
+
+		});
+	</script>
+</body>
+
+</html>

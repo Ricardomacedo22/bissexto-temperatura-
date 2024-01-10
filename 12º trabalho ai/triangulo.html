@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triângulos</title>
+</head>
+<body onload=""> 
+
+    <a href="initial.html"><button id="home">HOME</button></a>
+
+<div id="output">
+  <div id="lado">
+<p>Medidas do seu triângulo (cm):</p>
+    <input type="number" id="prim_lado" placeholder="Primeiro lado (maior):"><br>
+
+    <input type="number" id="seg_lado" placeholder="Segundo lado:"><br>
+
+    <input type="number" id="ter_lado" placeholder="Terceiro lado (menor):"> <br><br><br>
+
+<button type="button" id="mostrar">Mostrar</button>
+
+    <input type="text" id="tipo_de_triangulo" readonly>
+  </div>
+
+  <div id="angulos">
+    <p>Ângulos do seu triângulo (graus):</p>
+    <input type="number" id="prim_ang" placeholder="Primeiro ângulo (maior):"><br>
+
+    <input type="number" id="seg_ang" placeholder="Segundo ângulo:"><br>
+
+    <input type="number" id="ter_ang" placeholder="Terceiro ângulo (menor):"> <br><br><br>
+
+<button type="button" id="mostrar_angulos">Mostrar</button>
+
+    <input type="text" id="tipo_de_triangulo_ang" readonly>
+  </div>
+</div>
+
+  <canvas id="canvas" width="650" height="300"></canvas>
+
+      <style>
+        #canvas{
+            position: relative;
+            left: 450px;
+            top: 78px;
+        }
+
+        #output{
+            display: flex;
+            text-align: center;
+            justify-content: center;
+        }
+
+        #lado{
+            border: 10px;
+            margin: 20px;
+        }
+
+        #angulos{
+            border: 10px;
+            margin: 20px;
+
+        }
+        p, label, #mostrar, #mostrar_angulos{
+            font-size: 30px;
+            text-align: center;
+        }
+
+        input{
+            border:.5px dotted black;
+            text-align: center;
+            font-size: 25px;
+            width: 350px;
+            height: 38px;
+        }
+
+        input:hover{
+            border: 1px solid black;
+        }
+
+        #tipo_de_triangulo, #tipo_de_triangulo_ang{
+            width: 250px;
+            border: 1px solid black;
+        }
+
+        body{
+            height: 70vh;
+        }
+
+        #home{
+            font-size: 15px;
+            background: none;
+            border: .001px solid black;
+            height: 35px;
+            width: 70px;
+            border-radius: 10px;
+        }
+
+        #home:hover{
+            color: rgb(255, 0, 0);
+            background-color: rgba(154, 154, 154, 0.324);
+        }
+
+      </style>
+
+    <script>
+        
+        var mostrar = document.getElementById("mostrar");
+        var mostrar_angulos = document.getElementById("mostrar_angulos")
+        var canvas = document.getElementById("canvas");
+
+/*               segundo lados                */
+
+        mostrar.addEventListener('click', function(){
+            var prim_lado = document.getElementById("prim_lado").value;
+            var seg_lado = document.getElementById("seg_lado").value;
+            var ter_lado = document.getElementById("ter_lado").value;
+            var tipo_de_triangulo = document.getElementById("tipo_de_triangulo").value;
+            var canvas = document.getElementById("canvas")
+            var canvas1 = document.getElementById("canvas1")
+            let contexto2d = canvas.getContext( '2d');
+
+        
+            if (prim_lado == "" || seg_lado == "" || ter_lado == "" ) {
+                alert("Todos os campos devem estar preenchidos")
+                
+            }else if (prim_lado == seg_lado && prim_lado == ter_lado && seg_lado == ter_lado) {
+                contexto2d.clearRect(0, 0, canvas.width, canvas.height);
+                document.getElementById("tipo_de_triangulo").value = "equilátero"
+                desenhar_equilatero();
+               
+                
+            }else if (prim_lado == seg_lado && prim_lado !== ter_lado || prim_lado !== seg_lado && prim_lado == ter_lado) {
+                contexto2d.clearRect(0, 0, canvas.width, canvas.height);
+                document.getElementById("tipo_de_triangulo").value = "isósceles"
+                desenhar_isosceles_acutangulo();
+                
+
+            }else if (prim_lado !== seg_lado && prim_lado !== ter_lado &&  seg_lado == ter_lado) {
+                contexto2d.clearRect(0, 0, canvas.width, canvas.height);
+                document.getElementById("tipo_de_triangulo").value = "isósceles"
+                desenhar_isosceles_obtusangulo();
+                
+            }else { 
+                contexto2d.clearRect(0, 0, canvas.width, canvas.height);
+                document.getElementById("tipo_de_triangulo").value = "escaleno"
+            }
+        })
+
+/*               segundo ângulos                */
+
+        mostrar_angulos.addEventListener('click', function(){
+            var prim_ang = document.getElementById("prim_ang").value;
+            var seg_ang = document.getElementById("seg_ang").value;
+            var ter_ang = document.getElementById("ter_ang").value;
+            var tipo_de_triangulo_ang = document.getElementById("tipo_de_triangulo_ang").value;
+            var prim_lado = document.getElementById("prim_lado").value;
+            var seg_lado = document.getElementById("seg_lado").value;
+            var ter_lado = document.getElementById("ter_lado").value;
+            var tipo_de_triangulo = document.getElementById("tipo_de_triangulo").value;
+            var canvas = document.getElementById("canvas")
+            let contexto2d = canvas.getContext('2d');
+
+            if (prim_ang == "" || seg_ang == "" || ter_ang == "" ) {
+                alert("Todos os campos devem estar preenchidos")
+
+            } else if (prim_ang - (- seg_ang) - (- ter_ang) != 180) {
+                alert("A soma dos ângulos deve ser igual a 180º")
+
+            } else if (prim_ang == seg_ang && prim_ang == ter_ang && seg_ang == ter_ang) {
+                contexto2d.clearRect(0, 0, canvas.width, canvas.height);
+                document.getElementById("tipo_de_triangulo_ang").value = "equilátero"
+                desenhar_equilatero();
+
+            }else if (prim_ang == seg_ang && prim_ang !== ter_ang || prim_ang !== seg_ang && prim_ang == ter_ang || prim_lado !== seg_lado && prim_lado !== ter_lado &&  seg_lado == ter_lado ) {
+                document.getElementById("tipo_de_triangulo_ang").value = "isósceles"
+                    if (prim_ang < 90 && sec_ang < 90 && ter_ang < 90) {
+                        contexto2d.clearRect(0, 0, canvas.width, canvas.height);
+                        document.getElementById("tipo_de_triangulo_ang").value = "isósceles Acutângulo";
+                        desenhar_isosceles_acutangulo();
+
+                    }else if (prim_ang == 90 && seg_ang == ter_ang) {
+                        contexto2d.clearRect(0, 0, canvas.width, canvas.height);
+                        document.getElementById("tipo_de_triangulo_ang").value = "isósceles Retângulo"
+                        desenhar_isosceles_retangulo();
+
+                    }else if(prim_ang > 90 && seg_ang < 90 && ter_ang < 90 && seg_ang == ter_ang){
+                        contexto2d.clearRect(0, 0, canvas.width, canvas.height);
+                        document.getElementById("tipo_de_triangulo_ang").value = "isósceles obtusângulo"
+                        desenhar_isosceles_obtusangulo();
+                    }
+                    
+            }else if( prim_ang !== seg_ang && prim_ang !== ter_ang && seg_ang !== ter_ang){ 
+                contexto2d.clearRect(0, 0, canvas.width, canvas.height);
+                document.getElementById("tipo_de_triangulo_ang").value = "escaleno"
+                if (prim_ang < 90 && seg_ang < 90 && ter_ang < 90 && prim_ang !== seg_ang && prim_ang !== ter_ang && seg_ang !== ter_ang) {
+                    contexto2d.clearRect(0, 0, canvas.width, canvas.height);
+                        document.getElementById("tipo_de_triangulo_ang").value = "Escaleno Acutângulo";
+                        desenhar_isosceles_acutangulo();
+                    }
+                    else if (prim_ang == 90 && prim_ang !== seg_ang && prim_ang !== ter_ang && seg_ang !== ter_ang) {
+                        contexto2d.clearRect(0, 0, canvas.width, canvas.height);
+                        document.getElementById("tipo_de_triangulo_ang").value = "Escaleno Retângulo"
+                        desenhar_escaleno_retangulo();
+                    }
+                    else{
+                        contexto2d.clearRect(0, 0, canvas.width, canvas.height);
+                        document.getElementById("tipo_de_triangulo_ang").value = "Escaleno obtusângulo"
+                        desenhar_escaleno_obtusangulo();
+                        
+                    }
+            }
+        }
+    )
+
+        function desenhar() {
+            if (canvas.getContext) {
+                var prim_lado = document.getElementById("prim_lado").value;
+                var seg_lado = document.getElementById("seg_lado").value;
+                var ter_lado = document.getElementById("ter_lado").value;
+                var prim_ang = document.getElementById("prim_ang").value;
+                var seg_ang = document.getElementById("seg_ang").value;
+                var ter_ang = document.getElementById("ter_ang").value;
+                let contexto2d = canvas.getContext( '2d');
+                
+                contexto2d.beginPath();
+
+                contexto2d.moveTo(100,100);
+                contexto2d.lineTo(((100 - ( - prim_lado)) / 2)  , Math.cos(30) * (100 - prim_lado));
+                contexto2d.lineTo(( 100 + ( - prim_lado))  , Math.cos(30) * (100 -  prim_lado));
+
+
+               /* contexto2d.lineTo(((100 - ( -prim_lado / 2 )) ) , 50 )*/
+
+                contexto2d.stroke();
+                
+            }
+        }
+
+        function desenhar_equilatero() {
+            if (canvas.getContext) {
+                let contexto2d = canvas.getContext( '2d');
+
+                contexto2d.beginPath();
+
+                contexto2d.moveTo(100 * 2, 100 * 2);
+                contexto2d.lineTo(150 * 2, 13.4 * 2);
+                contexto2d.lineTo(200 * 2, 100 * 2);
+                contexto2d.lineTo(100 * 2, 100 * 2);
+
+                contexto2d.moveTo(125 * 2, 56.70 * 2);
+                contexto2d.lineTo((125 - 3) * 2, (56.70 - 3) *2 )
+                contexto2d.lineTo((125 + 3) * 2,(56.70 + 3) * 2)
+
+                contexto2d.moveTo(123 * 2, 58.70 * 2);
+                contexto2d.lineTo((123 - 3) * 2, (58.70 - 3) *2 )
+                contexto2d.lineTo((123 + 3) * 2,(58.70 + 3) * 2)
+
+                contexto2d.moveTo(175 * 2, 56.70 * 2);
+                contexto2d.lineTo((175 + 3) * 2, (56.70 - 3) *2 )
+                contexto2d.lineTo((175 - 3) * 2,(56.70 + 3) * 2)
+
+                contexto2d.moveTo(177 * 2, 58.70 * 2);
+                contexto2d.lineTo((177 + 3) * 2, (58.70 - 3) *2 )
+                contexto2d.lineTo((177 - 3) * 2,(58.70 + 3) * 2)
+
+                contexto2d.moveTo((150 + 1.5)  * 2, (100) * 2);
+                contexto2d.lineTo((150 + 1.5) * 2, (100 + 4) * 2);
+                contexto2d.lineTo((150 + 1.5) * 2, (100 - 4) * 2);
+                contexto2d.lineTo((150 + 1.5) * 2, (100 - 4) * 2);
+                contexto2d.lineTo((150 + 1.5) * 2, (100 + 4) * 2);
+                
+                contexto2d.moveTo((150 - 1.5) * 2, (100) * 2);
+                contexto2d.lineTo((150 - 1.5) * 2, (100 + 4) * 2);
+                contexto2d.lineTo((150 - 1.5) * 2, (100 - 4) * 2);
+                contexto2d.lineTo((150 - 1.5) * 2, (100 - 4) * 2);
+                contexto2d.lineTo((150 - 1.5) * 2, (100 + 4) * 2);
+
+                contexto2d.stroke();
+
+            }
+        }
+
+        function desenhar_isosceles_obtusangulo() {
+            if (canvas.getContext) {
+                let contexto2d = canvas.getContext('2d');
+
+                contexto2d.beginPath();
+
+                contexto2d.moveTo(75 * 2, 100 * 2);
+                contexto2d.lineTo(150 * 2, 63.68 * 2 );
+                contexto2d.lineTo(225 * 2, 100 * 2 );
+                contexto2d.lineTo(75 * 2, 100 * 2 );
+
+                contexto2d.moveTo(120 * 2, 78.2 * 2);
+                contexto2d.lineTo((120 - 2) * 2, (78.2 -2) * 2);
+                contexto2d.lineTo((120 + 2) * 2, (78.2 + 2) * 2)
+
+                contexto2d.moveTo(118 * 2, 80.2 * 2);
+                contexto2d.lineTo((118 - 2) * 2, (80.2 -2) * 2);
+                contexto2d.lineTo((118 + 2) * 2, (80.2 + 2) * 2)
+
+                contexto2d.moveTo(180 * 2, 78.2 * 2);
+                contexto2d.lineTo((180 + 2) * 2, (78.2 - 2) * 2);
+                contexto2d.lineTo((180 - 2) * 2, (78.2 + 2) * 2)
+
+                contexto2d.moveTo(182 * 2, 80.2 * 2);
+                contexto2d.lineTo((182 + 2) * 2, (80.2 - 2) * 2);
+                contexto2d.lineTo((182 - 2) * 2, (80.2 + 2) * 2);
+
+                contexto2d.moveTo(150 * 2, 100 * 2);
+                contexto2d.lineTo(150 * 2, 98 * 2);
+                contexto2d.lineTo(150 * 2,102 * 2);
+
+                contexto2d.stroke();
+
+            }
+        }
+
+        function desenhar_isosceles_acutangulo (){
+            if (canvas.getContext) {
+                let contexto2d = canvas.getContext('2d');
+
+                contexto2d.beginPath();
+
+                contexto2d.moveTo(124 * 2 ,100 * 2);
+                contexto2d.lineTo(152.3 * 2 , 20);
+                contexto2d.lineTo(180.6 * 2 , 100 * 2);
+                contexto2d.lineTo(124 * 2, 100 * 2);
+
+                contexto2d.moveTo(134 *2, 60 * 2);
+                contexto2d.lineTo(139 *2, 62 * 2);
+
+                contexto2d.moveTo(135 *2, 58 * 2);
+                contexto2d.lineTo(140 *2, 60 * 2);
+
+                contexto2d.moveTo(170.6 * 2 , 60 * 2);
+                contexto2d.lineTo(165.6 * 2 , 62 * 2);
+
+                contexto2d.moveTo(169.6 * 2 , 58 * 2);
+                contexto2d.lineTo(164.6 * 2 , 60 * 2);
+
+                contexto2d.moveTo(151.00 * 2 , 97 * 2);
+                contexto2d.lineTo(151.00 * 2 ,103 * 2 );
+
+                contexto2d.moveTo(154.00 * 2 , 97 * 2);
+                contexto2d.lineTo(154.00 * 2 ,103 * 2 );
+
+                contexto2d.stroke();
+            }
+        }
+        
+        function desenhar_isosceles_retangulo(){
+                if (canvas.getContext) {
+                    let contexto2d = canvas.getContext('2d');
+
+                    contexto2d.beginPath();
+
+                    contexto2d.moveTo(120 * 2, 100 * 2);
+                    contexto2d.lineTo( 120 * 2, 10 * 2);
+                    contexto2d.lineTo(210 * 2, 100 * 2);
+                    contexto2d.lineTo(120 * 2, 100 * 2);
+
+                    contexto2d.moveTo(116 * 2, 58 * 2);
+                    contexto2d.lineTo(124* 2, 58 * 2);
+
+                    contexto2d.moveTo(116 * 2, 62 * 2);
+                    contexto2d.lineTo(124 * 2, 62 * 2);
+
+                    contexto2d.moveTo(159 * 2, 96 * 2);
+                    contexto2d.lineTo(159* 2, 104 * 2);
+
+                    contexto2d.moveTo(164 * 2, 96 * 2);
+                    contexto2d.lineTo(164 * 2, 104 * 2);
+
+                    contexto2d.moveTo(170 * 2, 54 * 2);
+                    contexto2d.lineTo(163 * 2, 61 * 2);
+
+                    contexto2d.stroke();
+                    
+                }
+            }
+
+            function desenhar_escaleno_acutangulo(){
+                if (canvas.getContext) {
+                    let contexto2d = canvas.getContext('2d');
+
+                    contexto2d.beginPath();
+
+                    contexto2d.moveTo(100 * 2, 100 * 2);
+                    contexto2d.lineTo(125.2 * 2 , 45.53 * 2);
+                    contexto2d.lineTo(200 * 2 , 100 * 2);
+                    contexto2d.lineTo(100 * 2 , 100 * 2);
+
+                    contexto2d.moveTo(108.5 * 2, 71 * 2);
+                    contexto2d.lineTo(118 * 2 , 74 * 2);
+
+                    contexto2d.moveTo(155 * 2, 74 *2);
+                    contexto2d.lineTo(162 * 2 , 65 * 2);
+
+                    contexto2d.moveTo(158.5 * 2, 76.5 *2);
+                    contexto2d.lineTo(165.5 * 2 , 67.5 * 2);
+
+                    contexto2d.moveTo(140 * 2 , 95 *2);
+                    contexto2d.lineTo(140 * 2 , 105 * 2);
+
+                    contexto2d.moveTo(144 * 2 , 95 *2);
+                    contexto2d.lineTo(144 * 2 , 105 * 2);
+
+                    contexto2d.moveTo(148 * 2 , 95 *2);
+                    contexto2d.lineTo(148 * 2 , 105 * 2);
+
+                    contexto2d.stroke();
+                    
+                }
+            }
+
+            function desenhar_escaleno_retangulo() {
+                if (canvas.getContext) {
+                    let  contexto2d = canvas.getContext('2d');
+
+                    contexto2d.beginPath();
+
+                    contexto2d.moveTo(110 * 2, 100 * 2);
+                    contexto2d.lineTo(110 * 2 , 40 *  2);
+                    contexto2d.lineTo(210 * 2, 100 * 2);
+                    contexto2d.lineTo(110 * 2, 100 * 2);
+
+                    contexto2d.moveTo(105 * 2 , 72 * 2);
+                    contexto2d.lineTo(115 * 2 , 72 * 2);
+
+                    contexto2d.moveTo(155 * 2, 73 *2);
+                    contexto2d.lineTo(161 * 2 , 64 * 2);
+
+                    contexto2d.moveTo(159 * 2, 76 *2);
+                    contexto2d.lineTo(165 * 2 , 67 * 2);
+
+                    contexto2d.moveTo(150 * 2 , 95 *2);
+                    contexto2d.lineTo(150 * 2 , 105 * 2);
+
+                    contexto2d.moveTo(155 * 2 , 95 *2);
+                    contexto2d.lineTo(155 * 2 , 105 * 2);
+
+                    contexto2d.moveTo(160 * 2 , 95 *2);
+                    contexto2d.lineTo(160 * 2 , 105 * 2);
+                    
+                    contexto2d.stroke();
+                    
+                }
+            }
+
+            function desenhar_escaleno_obtusangulo() {
+                if (canvas.getContext) {
+                let contexto2d = canvas.getContext('2d');
+
+                contexto2d.beginPath();
+
+                contexto2d.moveTo(100 * 2, 100 * 2);
+                contexto2d.lineTo(230 * 2 , 42.65 * 2);
+                contexto2d.lineTo(180 * 2 , 100 * 2);
+                contexto2d.lineTo(100 * 2 , 100 * 2);
+
+                contexto2d.moveTo(195 * 2, 75 * 2);
+                contexto2d.lineTo(205 * 2, 80 * 2);
+
+                contexto2d.moveTo(157 * 2 ,69 * 2);
+                contexto2d.lineTo(162 * 2, 78 * 2);
+
+                contexto2d.moveTo(163 * 2 ,66.5 * 2);
+                contexto2d.lineTo(168 * 2, 75.5 * 2);
+
+                contexto2d.moveTo(169 * 2 ,63 * 2);
+                contexto2d.lineTo(174 * 2, 72 * 2);
+
+                contexto2d.moveTo(146 * 2, 95 * 2);
+                contexto2d.lineTo(146 * 2 , 105 * 2);
+
+                contexto2d.moveTo(152 * 2, 95 * 2);
+                contexto2d.lineTo(152 * 2 , 105 * 2);
+
+
+                contexto2d.stroke();
+                
+            }
+        }
+
+
+
+
+        /*contexto2d.lineTo( Math.sin(30) * (100 - (prim_lado)) , Math.cos(30) * (100 - prim_lado));*/
+
+        /*contexto2d.lineTo((100 - (- prim_lado)) * 2 ,100);*/
+
+        /*   contexto2d.lineTo((100 - (ter_lado  * (math.sin(90 - (1 / (math.cos( ter_lado / (2 * prim_lado)))))))), 
+        (100 - (ter_lado * (math.cos(90 - (1 / (math.cos( ter_lado / (2 * prim_lado)))))))));  */
+
+
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Par e ímpar</title>
+</head>
+
+  <body>
+
+<a href="initial.html"><button id="home">HOME</button></a>
+
+<div id="output">
+    <input type = "number" id = "num_input" placeholder="Número">
+    <input type = "text" id = "resultado" placeholder="Resposta" readonly>
+    <button type = "button" id = "verif_btn">Verificar</button>
+</div>
+    <script>
+        let verif_btn = document.getElementById("verif_btn");
+
+        verif_btn.addEventListener('click', function(){
+
+          var num_1 = document.getElementById("num_input").value 
+
+          if( num_1 % 2 == 0){
+              document.getElementById ("resultado").value = "Par"
+              document.getElementById ("num_input").style.color = 'red'
+
+          }else {
+              document.getElementById("resultado").value = "Ímpar"
+              document.getElementById ("num_input").style.color = 'green'
+
+          }
+
+        })
+
+    </script>
+
+    <style>
+      #output{
+        position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+      }
+      input{
+        border: .5px solid black;
+        height: 50px;
+        width: 150px;
+        font-size: 25px;
+        border: 0.5px dotted black;
+        text-align: center;
+      }
+      input:hover{
+        border: 0.5px solid black;
+      }
+
+      #verif_btn{
+        height: 55px;
+        width: 155px;
+        font-size: 25px;
+        border: none;
+      }
+
+      #verif_btn:hover{
+        border: 1px solid black;
+      }
+
+
+      #home{
+        font-size: 15px;
+        background: none;
+        border: .001px solid black;
+        height: 35px;
+        width: 70px;
+        border-radius: 10px;
+      }
+      #home:hover{
+        color: rgb(255, 0, 0);
+       background-color: rgba(154, 154, 154, 0.324);
+      }
+
+    </style>
+  
+  </body>
+
+</html>
